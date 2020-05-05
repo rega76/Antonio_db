@@ -1,0 +1,70 @@
+*{
+    margin: 0 auto;
+    padding: 0 auto;
+    margin-top: 20px;
+}
+
+body{
+    
+    color:white;
+    background-image: url(./comedor.jpg);
+    background-repeat: no-repeat;
+    text-align: center;
+    background-position:center;
+
+}
+table{
+
+    opacity: 0.5;
+    background-color: black;
+    border-radius: 5px;
+    width: 500px;
+    height: 300px;
+    margin: 0 auto;
+    padding: 0 auto;
+
+}
+
+.redondeado {
+    border-radius: 5px;
+}
+
+.lila{
+    background-color:#808FC4;
+    color:white;
+    border-radius: 5px;
+    width: 150px;
+    height: 50px;
+}
+.radio{
+   width: 30px;
+
+} 
+#.check{
+   width: 30px;
+   height: 20px;
+
+} 
+.lista{
+    color: blue;
+    border: 2px solid grey;
+    width: 1000px;
+    height: 100px;
+}
+
+.lista{
+    color:white;
+    border: 2px solid grey;
+    width: 1000px;
+    height: 100px;
+}
+
+.cabecera{
+    color: rgb(0, 255, 242);
+    
+}
+
+
+
+
+
