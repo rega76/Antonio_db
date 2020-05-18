@@ -48,6 +48,19 @@ require_once "conexion.php";
 		$conexion = null; 
 	}
 
+	public static function eliminar2($dni){
+		$conexion =new Conexion();
+		if($dni == TRUE){
+			$consulta = $conexion->prepare('DELETE FROM ' . self::TABLA3 .' WHERE  dni = :dni' );
+			
+			$consulta->bindParam(':dni', $dni);
+			$consulta->execute();	
+			
+									 
+		}
+		$conexion = null; 
+	}
+
 	
 
 	

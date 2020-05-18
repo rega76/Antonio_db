@@ -4,8 +4,8 @@ require_once "conexion.php";
 
 	class Tutor{
 		
-		private $idAlumno;
 		private $dni;
+		private $idAlumno;
 		private $nombre;
 		private $apellidos;
 		private $telefono;
@@ -15,15 +15,14 @@ require_once "conexion.php";
 		private $codPostal;
 		private $estadoCivil;
 
-		const TABLA2 = 'tutor';
-	
-   		public function getIdAlumno() {
-    	  return $this->idAlumno;
-   		}
 
-   		public function getDni() {
-    	  return $this->dni;
-   		}
+		public function getDni() {
+			return $this->dni;
+		}
+		
+		public function getIdAlumno() {
+	  		 return $this->idAlumno;
+		}
 
    		public function getNombre() {
 	      return $this->nombre;
@@ -55,12 +54,12 @@ require_once "conexion.php";
 	      return $this->estadoCivil;
 	   }
 		
-		public function setidAlumno($idAlumno) {
-	      $this->idAlumno = $idAlumno;
-	   }
-		public function setDni($dni) {
-	      $this->dni = $dni;
-	   }
+	   public function setDni($dni) {
+			$this->dni = $dni;
+		}
+	   public function setidAlumno($idAlumno) {
+		 $this->idAlumno = $idAlumno;
+	  }
 		public function setNombre($nombre) {
 	      $this->nombre = $nombre;
 	   }
@@ -109,10 +108,10 @@ require_once "conexion.php";
 	    public function guardar(){
 
 	      $conexion = new Conexion();
-	     if($this->dni) /*Modifica*/ {
-	      	 $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA2 .' (dni,idAlumno, nombre,apellidos,telefono,direccion,provincia,municipio,codPostal,estadoCivil) 
+	     if($this->dni){
+	      	 $consulta = $conexion->prepare('INSERT INTO tutor (dni,idAlumno, nombre,apellidos,telefono,direccion,provincia,municipio,codPostal,estadoCivil) 
 	         	VALUES(:dni,:idAlumno, :nombre,:apellidos,:telefono,:direccion,:provincia,:municipio,:codPostal,:estadoCivil)');
-	      
+			
 			 $consulta->bindParam(':dni', $this->dni);   
 			 $consulta->bindParam(':idAlumno', $this->idAlumno);    
 	         $consulta->bindParam(':nombre', $this->nombre);
@@ -123,27 +122,23 @@ require_once "conexion.php";
 	         $consulta->bindParam(':municipio', $this->municipio);
 	         $consulta->bindParam(':codPostal', $this->codPostal);
 	         $consulta->bindParam(':estadoCivil', $this->estadoCivil);
-	         $respuesta3=$consulta->execute();
-
-	        if($respuesta3 == TRUE){
-
-	         	printf ('<h3 style="color:yellow;"> El registro se ha realizado con exito.<h3>');
-	         	printf ("<br><a href='registroTutores.php'><button>volver</button></a>");
-	         }else{
-	         	printf ('<h3 style="color:yellow;"> El registro con dni: '.$this->dni.' ya existe.<h3>');
-	         	printf ("<br><a href='registroTutores.php'><button>volver</button></a>");
-	         }
+	         $consulta->execute();
+			return $consulta;
+	        
 		}
 		$conexion = null; 
 		}
 
-		public static function modificar($dni,$nombre,$apellidos,$telefono,$direccion,$provincia,$municipio,$codPostal,$estadoCivil){
+		public function modificar($dni,$idAlumno,$nombre,$apellidos,$telefono,$direccion,$provincia,$municipio,$codPostal,$estadoCivil){
 			$conexion =new Conexion();
 
-			if($dni){
-			$consulta = $conexion->prepare('UPDATE ' . self::TABLA2 .' SET  dni = :dni, nombre = :nombre, apellidos = :apellidos, telefono = :telefono,direccion = :direccion, provincia = :provincia,municipio = :municipio,codPostal = :codPostal,estadoCivil = :estadoCivil WHERE dni = :dni' );
+			if($dni == true){
+			$consulta = $conexion->prepare('UPDATE tutor SET  dni = :dni,idAlumno=:idAlumno, nombre = :nombre, apellidos = :apellidos, telefono = :telefono,
+										   direccion = :direccion, provincia = :provincia,municipio = :municipio,codPostal = :codPostal,estadoCivil = :estadoCivil
+										   WHERE dni = :dni' );
 
-	     	 $consulta->bindParam(':dni', $dni);
+			  $consulta->bindParam(':dni', $dni);
+			  $consulta->bindParam('idAlumno',$idAlumno);
 	         $consulta->bindParam(':nombre', $nombre);
 	         $consulta->bindParam(':apellidos', $apellidos);
 	         $consulta->bindParam(':telefono', $telefono);
@@ -155,76 +150,63 @@ require_once "conexion.php";
 	         $respuesta=$consulta->execute();
 
 	         if($respuesta == true){
-
-	         	printf ('<h3 style="color:yellow;"> Los datos del tutor con DNI: '. $dni.' han sido modificados.<h3>');
-	         	printf ("<br><a href='registroTutores.php'><button>volver</button></a>");
+					return $respuesta;
 	         }
 			}
 			$conexion = null; 
 		}
 
+	/*	public static function tutorAmodificar($dni){
+			$conexion=new Conexion();
+			if($dni == true){
+			$consulta = $conexion->prepare('SELECT * FROM tutor WHERE dni = :dni');
+			$consulta->bindParam(':dni', $dni);       
+			$consulta->execute();
+			$registro = $consulta->fetch();
+				if($registro){
+					return $registro;
+				}
+			}
+		}
+	*/
 		public static function eliminar($dni){
 			$conexion =new Conexion();
-
 			if($dni == TRUE){
-			$consulta = $conexion->prepare('DELETE FROM ' . self::TABLA2 .'  WHERE dni = :dni' );
-
-	     	 $consulta->bindParam(':dni', $dni);
-
-	         $respuesta2=$consulta->execute();
-	         
-	         if($respuesta2 == true){
-
-	         	printf ('<h3 style="color:yellow;"> El registro se ha eliminado con exito.<h3>');
-	         	printf ("<br><a href='registroTutores.php'><button>volver</button></a>");
-	         }
-			}
+				$consulta = $conexion->prepare('DELETE FROM tutor  WHERE  dni = :dni' );
+				
+				$consulta->bindParam(':dni', $dni);
+				$consulta->execute();	
+				
+					printf ('<h2 style="color:white;">El registro se ha eliminado con exito.<h2>');
+					printf ("<br><a href='registroTutores.php'><button class='lila'>volver</button></a>");
+				         				
+			}else{
+					printf ('<h2 style="color:white;"> No se ha podido eliminar el registro. <h2>');
+					printf ("<br><a href='registroTutores.php'><button class='lila'>volver</button></a>");
+				}
 			$conexion = null; 
 		}
-		public static function ver($idAlumno){
+		public static function ver($dni){
+			$conexion = new Conexion();
+			if($dni == TRUE){
+			$consulta = $conexion->prepare('SELECT * FROM tutor WHERE dni = :dni'); 	         	 
+			$consulta->bindParam(':dni', $dni); 
+			$consulta->execute();      
+			$registros=$consulta->fetch();
+			return $registros;	
+			}	
+					  
+			$conexion = null;   
+		}
 
-	      $conexion = new Conexion();
-
-	      	 $consulta = $conexion->prepare('SELECT * FROM ' . self::TABLA2.'
-	         	 WHERE idAlumno = :idAlumno');
-	      
-			 $consulta->bindParam(':idAlumno', $idAlumno);       
-	         $consulta->execute();
-
-	         ?>
-	         	<table class="lista">
-		 			<tr class="cabecera">
-		 				<th>DNI<hr></th>
-		 				<th>Nombre<hr></th>
-		 				<th>Apellidos<hr></th>
-		 				<th>Telefono<hr></th>
-		 				<th>Direcccion<hr></th>
-		 				<th>Provincia<hr></th>	
-		 				<th>Municipio<hr></th>
-		 				<th>C.P<hr></th>
-		 				<th>Estado Civil<hr></th>
-		 			</tr>
-	         <?php
-	       		 while ($registro = $consulta->fetch()) {
-	       		 ?>			
-	       		 	<tr>	
-		 				<td><?php  echo $registro['dni']; ?></td>
-		 				<td><?php echo $registro['nombre']; ?></td>
-		 				<td><?php echo $registro['apellidos']; ?></td>
-		 				<td><?php echo $registro['telefono']; ?></td>
-		 				<td><?php echo $registro['direccion'];?></td>
-		 				<td><?php echo $registro['provincia'];?></td>
-		 				<td><?php echo $registro['municipio']; ?></td>
-		 				<td><?php echo $registro['codPostal'];?></td>
-		 				<td><?php echo $registro['estadoCivil'];?></td>
-		 			</tr>		 		
-			 	<?php
-				  }
-				  ?> </table> <?php
-				  printf ("<br/><button class='lila'><a href='registroTutores.php'>Volver</a></button>");
+		public static function verTodos(){
+			$conexion = new Conexion();
+			$consulta = $conexion->prepare('SELECT * FROM tutor order by idAlumno'); 	         	 			
+			$consulta->execute();      
+			$registros=$consulta->fetchAll();
+			return $registros;	
+					  
 			$conexion = null;   
 		}
 	}	
-
-
  ?>

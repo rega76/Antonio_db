@@ -30,8 +30,8 @@ require_once "conexion.php";
 //METODOS SET
 
 
-		public function setIdAlumno($IdAlumno) {
-	      $this->IdAlumno = $IdAlumno;
+		public function setIdAlumno($idAlumno) {
+	      $this->idAlumno = $idAlumno;
 	   }
 
 	   public function setidIntolerancia($idIntolerancia) {
@@ -56,40 +56,29 @@ require_once "conexion.php";
 	   
 	       $conexion = new Conexion();
 
-	      	 $consulta = $conexion->prepare('INSERT INTO ' . self::TABLA5 .' ( idAlumno,intolerancia) 
-	         	VALUES(:idAlumno,:intolerancia)');
+			   $consulta = $conexion->prepare('INSERT INTO intolerancia_alumno 
+			   (idAlumno,intolerancia) 
+			   values (:idAlumno,:intolerancia)');
+			   
 	      
 			 $consulta->bindParam(':idAlumno', $this->idAlumno);       
 	         $consulta->bindParam(':intolerancia', $this->intolerancia);
-	         $respuesta1=$consulta->execute();
-
-	        if($respuesta1){
-				printf ("<h2 style='color:yellow;'>Intolerancia registrada con exito.</h2>");
-			      printf ("<br/><button class='lila'><a href='registroIntolerancias.php'>Volver</a></button>");
-			}else{
-				printf ("<h2 style='color:yellow;'>No se pudo registrar.</h2><br>");
-				printf ("<br><a href='registroIntolerancias.php'><button class='lila'>volver</button></a>");
-			}
+			 $consulta->execute();
+			 $this->idAlumno = $conexion->lastInsertId();
+		
 		$conexion = null; 
 		}
+		
 
-		public  function borrar($idAlumno,$intolerancia){
+		public function eliminar($idAlumno,$intolerancia){
 			$conexion =new Conexion();
-
-			$consulta = $conexion->prepare('DELETE FROM ' . self::TABLA5 .' WHERE idAlumno = :idAlumno and intolerancia = :intolerancia ' );
-
-	     	$consulta->bindParam(':idAlumno', $idAlumno);
-	         $consulta->bindParam(':intolerancia', $intolerancia);
-	         $respuesta0 = $consulta->execute();
-	          //$this->idAlumno = $conexion->lastInsertId();
-			if($respuesta0 == TRUE){
-				printf ("<h2  style='color:yellow;'>Se ha eliminado correctamente</h2>");
-				printf ("<br><a href='registroIntolerancias.php'><button class='lila'>volver</button></a>") ;
-			}else{
-				printf("<h2  style='color:yellow;'>No se pudo eliminar.</h2>");
-				printf ("<br><a href='registroIntolerancias.php'><button class='lila'>volver</button></a>") ;
-			}
-
+			
+			$consulta = $conexion->prepare('DELETE FROM intolerancia_alumno WHERE idAlumno = :idAlumno and intolerancia = :intolerancia ' );
+			$consulta->bindParam(':idAlumno', $idAlumno); 
+			$consulta->bindParam(':intolerancia', $intolerancia);
+			$consulta->execute();
+			
+				
 			$conexion = null; 
 		}
 
@@ -97,33 +86,13 @@ require_once "conexion.php";
 
 		$conexion = new Conexion();
 
-		 $consulta = $conexion->prepare('SELECT * FROM ' . self::TABLA5.' WHERE idAlumno = :idAlumno');
+		 $consulta = $conexion->prepare('SELECT * FROM intolerancia_alumno join intolerancia  WHERE
+		 								intolerancia_alumno.intolerancia=intolerancia.intolerancia and idAlumno = :idAlumno');
 			 $consulta->bindParam(':idAlumno', $idAlumno);        
-	         $consulta->execute();
-				echo "<h2  style='color:yellow;'>Intolerancias del alumno con codigo: ".$idAlumno.'</h2><br>';
-			?>
-		  		<table class="lista">
-		  			<tr class="cabecera">
-		  				<th><h3>Nombre de Intolerancia/s<hr></h3></th style="color;yellow;">
-		  			</tr>
-		  	<?php
-			  while ($registro = $consulta->fetch()) {
-
-			  	?>
-			  		<tr>
-			  			<td><?php echo $registro['intolerancia']; ?><hr></td>
-			  		</tr>
-			  	<?php
-			  	
-			  	echo '<br>';
-			  }
-
-			  ?>
-			  	</table>
-			  <?php
-			  printf ("<br/><button class='lila'><a href='registroIntolerancias.php'>Volver</a></button>");
-	
-			  $conexion = null; 
+			 $consulta->execute();
+			 $registros = $consulta->fetchAll();
+      	 	 return $registros;
+			 $conexion = null; 
 		}
 	}
 

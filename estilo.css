@@ -2,6 +2,7 @@
     margin: 0 auto;
     padding: 0 auto;
     margin-top: 20px;
+    list-style:none;
 }
 
 body{
@@ -9,13 +10,14 @@ body{
     color:white;
     background-image: url(./comedor.jpg);
     background-repeat: no-repeat;
+    !background-color:#B3D4FC;
     text-align: center;
     background-position:center;
-
+    
 }
 table{
 
-    opacity: 0.5;
+    opacity: 0.6;
     background-color: black;
     border-radius: 5px;
     width: 500px;
@@ -36,6 +38,10 @@ table{
     width: 150px;
     height: 50px;
 }
+.lila:hover{
+    background-color: rgb(6, 1, 15);
+    font-size: 120%;
+}
 .radio{
    width: 30px;
 
@@ -46,25 +52,50 @@ table{
 
 } 
 .lista{
-    color: blue;
+  
     border: 2px solid grey;
-    width: 1000px;
+    width: 900px;
     height: 100px;
+    padding:10px;
 }
 
-.lista{
-    color:white;
-    border: 2px solid grey;
-    width: 1000px;
-    height: 100px;
-}
+
 
 .cabecera{
-    color: rgb(0, 255, 242);
+    color: rgb(0, 255, 179);
     
 }
+.tb{
+    border: 2px solid white;
+    width: 500px;
+    height: 20px;
+}
 
+.alumnoModificado{
+    border: 2px solid white;
+    width: 800px;
+    padding: 30px;
+    color: rgb(235, 245, 245);
+}
 
-
-
-
+.regTutor{
+    background-color:#808FC4;
+    color:white;
+    border-radius: 5px;
+    width: 150px;
+    height: 50px;
+    margin-right: -140px;
+}
+.regTutor:hover{
+    background-color: rgb(6, 1, 15);
+    font-size: 120%;
+}
+ .acciones{
+     background-color:rgb(255, 208, 0);
+     height: 22.5px;
+   
+ }
+ .acciones:hover{
+    background-color: rgb(240, 235, 245);
+    color: rgba(233, 70, 20, 0.979);
+ }
