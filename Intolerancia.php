@@ -39,21 +39,6 @@ require_once "conexion.php";
 
 	   }
 
-/*	   public function guardarIntolerancia2(){
-	   
-		$conexion = new Conexion();
-
-			$consulta = $conexion->prepare('INSERT INTO intolerancia_alumno (idAlumno,intolerancia)
-			  VALUES(:idAlumno,:intolerancia)');
-	   
-		 $consulta->bindParam(':idAlumno', $this->idAlumno);       
-		  $consulta->bindParam(':intolerancia', $this->intolerancia);
-		  $consulta->execute();
-		 // $this->idAlumno = $conexion->lastInsertId();
-	 
-	 $conexion = null; 
-	 }
-*/
 	}
 
  ?>

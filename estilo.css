@@ -5,12 +5,13 @@
     list-style:none;
 }
 
+
 body{
     
     color:white;
-    background-image: url(./comedor.jpg);
-    background-repeat: no-repeat;
-    !background-color:#B3D4FC;
+    /*background-image: url(./comedor.jpg);
+    background-repeat: no-repeat;*/
+     background-color:rgb(179, 198, 252); 
     text-align: center;
     background-position:center;
     
@@ -54,7 +55,7 @@ table{
 .lista{
   
     border: 2px solid grey;
-    width: 900px;
+    width: 1000px;
     height: 100px;
     padding:10px;
 }
@@ -62,7 +63,7 @@ table{
 
 
 .cabecera{
-    color: rgb(0, 255, 179);
+    color: rgb(0, 85, 255);
     
 }
 .tb{
@@ -72,7 +73,7 @@ table{
 }
 
 .alumnoModificado{
-    border: 2px solid white;
+    border: 2px solid rgb(255, 255, 255);
     width: 800px;
     padding: 30px;
     color: rgb(235, 245, 245);

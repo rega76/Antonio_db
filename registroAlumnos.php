@@ -27,8 +27,8 @@
 	//MODIFICAR DATOS DE UN ALUMNO
 		}elseif(isset($_POST['modificar'])){
 		//Lo primero que hago es mostrar los datos del alumno al que quiero realizar los cambios
-		//mediante el método alumnoAmodificar, extrayendo los datos por el idAlumno.
-		    $modif= Alumno::alumnoAmodificar($idAlumno,$nombre,$apellidos,$edad,$curso,$transporteEscolar);
+		//mediante el método verDatos, extrayendo los datos por el idAlumno.
+		    $modif= Alumno::verDatos($idAlumno,$nombre,$apellidos,$edad,$curso,$transporteEscolar);
 			?>
 				<form action="" method="post">
 				<table class="alumnoModificado">
@@ -65,6 +65,7 @@
 				</table>	
 				</form>
 			<?php
+			
 	//Una vez modificados los datos, realizo los cambios en la base de datos a través del 
 	//método modificar.
 				

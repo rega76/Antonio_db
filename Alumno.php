@@ -93,8 +93,8 @@ require_once "conexion.php";
 		}
 		$conexion = null; 
 		}
-//METODO PARA MODIFICAR DATOS EN LA TABLA ALUMNO
-		public static function alumnoAmodificar($idAlumno){
+//METODOS PARA MODIFICAR DATOS EN LA TABLA ALUMNO
+		public static function verDatos($idAlumno){
 			$conexion =new Conexion();
 			if($idAlumno){
 					$consulta = $conexion->prepare('SELECT * FROM ' . self::TABLA.' WHERE idAlumno = :idAlumno');
